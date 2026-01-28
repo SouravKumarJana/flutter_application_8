@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../error_handeling/error_hedeling_helper.dart';
+import '../error_handeling/error_handeling_helper.dart';
 import '../services/user_api_service.dart';
 import '../network/dio_client.dart';
 import '../models/user.dart';
