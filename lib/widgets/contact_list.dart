@@ -38,8 +38,7 @@ class _ContactListState extends State<ContactList> {
             String errorMessage = 'Unexpected error';
 
             if (snapshot.error is DioException) {
-              errorMessage =
-                  handleDioError(snapshot.error as DioException);
+              errorMessage = handleDioError(snapshot.error as DioException);
             }
 
             return Center(
