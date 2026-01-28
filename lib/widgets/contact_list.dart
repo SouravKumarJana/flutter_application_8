@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import '../error_handeling/error_hedeling_helper.dart';
 import '../services/user_api_service.dart';
 import '../network/dio_client.dart';
 import '../models/user.dart';
 import 'user_profile_screen.dart';
+import 'package:dio/dio.dart';
+
 
 class ContactList extends StatefulWidget {
   const ContactList({super.key});
@@ -33,7 +35,19 @@ class _ContactListState extends State<ContactList> {
           }
 
           if (snapshot.hasError) {
-            return const Center(child: Text('Failed to load contacts'));
+            String errorMessage = 'Unexpected error';
+
+            if (snapshot.error is DioException) {
+              errorMessage =
+                  handleDioError(snapshot.error as DioException);
+            }
+
+            return Center(
+              child: Text(
+                errorMessage,
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
           }
 
           final users = snapshot.data!;
@@ -49,7 +63,6 @@ class _ContactListState extends State<ContactList> {
                 leading: CircleAvatar(
                   radius: 22,
                   backgroundImage: NetworkImage(
-                    // Fake profile image based on user id
                     'https://i.pravatar.cc/150?img=${user.id}',
                   ),
                 ),
