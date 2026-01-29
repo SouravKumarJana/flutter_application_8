@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../error_handeling/error_handeling_helper.dart';
+import '../error_handeling/error_handling_helper.dart';
 import '../services/user_api_service.dart';
 import '../network/dio_client.dart';
 import '../models/user.dart';
@@ -16,11 +16,15 @@ class ContactList extends StatefulWidget {
 
 class _ContactListState extends State<ContactList> {
   late final UserApiService _apiService;
-
+    late Future<List<User>> userDetails;
   @override
   void initState() {
     super.initState();
     _apiService = UserApiService(DioClient.createDio());
+    _getUserDetails();
+  }
+  void _getUserDetails() {
+    userDetails= _apiService.getUsers();
   }
 
   @override
@@ -28,7 +32,7 @@ class _ContactListState extends State<ContactList> {
     return Scaffold(
       appBar: AppBar(title: const Text('Contacts')),
       body: FutureBuilder<List<User>>(
-        future: _apiService.getUsers(),
+        future: userDetails,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class DioClient {
   static Dio createDio() {
-    final dio = Dio(
+    return Dio(
       BaseOptions(
         baseUrl: 'https://jsonplaceholder.typicode.com',
         connectTimeout: const Duration(seconds: 10),
@@ -12,9 +12,6 @@ class DioClient {
         },
       ),
     );
-
-  
-
-    return dio;
   }
 }
+
